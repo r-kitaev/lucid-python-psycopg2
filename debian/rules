@@ -11,7 +11,7 @@ configure-stamp:
 	touch configure-stamp
 
 build: configure build-stamp
-build-stamp: 
+build-stamp:
 	dh_testdir
 	for python in $(PYVERS); do \
 		$$python setup.py build ; \
@@ -23,7 +23,7 @@ build-stamp:
 
 clean: configure
 	dh_testdir
-	dh_testroot 
+	dh_testroot
 	rm -fr *-stamp build
 	for python in $(PYVERS); do \
 		$$python setup.py clean ; \
@@ -38,7 +38,7 @@ install-arch: build
 	# psycopg2
 	for python in $(PYVERS); do \
             $$python setup.py install \
-		--root=$(CURDIR)/debian/python-psycopg2 --no-compile; \
+		--root=$(CURDIR)/debian/lucid-python-psycopg2 --no-compile; \
 	done
 	for python in $(PYVERS); do \
 	    $$python-dbg setup.py install \
@@ -75,9 +75,8 @@ binary-arch: build install-arch
 	dh_installdocs -a README AUTHORS doc tests
 	dh_installchangelogs -a ChangeLog
 	dh_link -a
-	dh_strip -ppython-psycopg2 --dbg-package=python-psycopg2-dbg
+	dh_strip -plucid-python-psycopg2
 	rm -rf debian/python-psycopg2-dbg/usr/share/doc/python-psycopg2-dbg
-	ln -s python-psycopg2 debian/python-psycopg2-dbg/usr/share/doc/python-psycopg2-dbg
 	dh_compress -a
 	dh_fixperms -a
 	dh_makeshlibs -a
